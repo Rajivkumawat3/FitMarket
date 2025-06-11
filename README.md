@@ -46,28 +46,30 @@ Go inside ./Fit-Market/
 Run npm install 
 ```
 
-<!-- Go inside Fit-Market/frontend
+Go inside Fit-Market/frontend
 
 ```sh
 Run npm install
-``` -->
+```
 
 To start the project Server on localhost Go inside ./Fit-Market/
 
 ```sh
 Run npm run dev
 ```
-<!-- 
+
 To start the project Frontend on localhost Go inside ./Fit-Market/frontend
 
 ```sh
 Run npm start
-``` -->
+```
 
 
-5. Env Variables
-   Make Sure to Create a config.env file in backend/config directory and add appropriate variables in order to useCancel changes the app.
-   Essential Variables 
+## Environment Variables
+
+Create a `config.env` file inside the `backend/config` directory and add the following variables:
+
+Essential Variables 
 PORT=
 JWT_SECRET=
 JWT_EXPIRE=
@@ -86,7 +88,7 @@ STRIPE_PUBLIC_KEY=
 STRIPE_SECRET_KEY=
 
 
-<!-- 
+
 ## Screenshots
 
 #### Landing Page
@@ -138,4 +140,4 @@ STRIPE_SECRET_KEY=
 
 
 #### Admin All users page
-<img width="551" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/8117c000-3e36-43d4-be34-486a6f96fd1f"> -->
+<img width="551" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/8117c000-3e36-43d4-be34-486a6f96fd1f">
