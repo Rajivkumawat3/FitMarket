@@ -12,16 +12,13 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 
 const categories = [
-  "Laptop",
-  "Footwear",
-  "Bottom",
-  "Tops",
-  "Attire",
-  "Camera",
-  "SmartPhones",
-  "men",
-  "women"
-];
+  "Videogame",
+  "Furniture",
+  "Two-wheeler",
+  "Four-Wheeler",
+  "digital-equipments",
+     "clothes",
+ ];
 
 
 const Products = () => {
