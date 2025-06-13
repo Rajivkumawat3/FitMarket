@@ -1,0 +1,96 @@
+# version: '3.7'
+
+# services:
+#   server:
+#     image: rajivkumawat3/ecom_server
+#     container_name: fitmarket-server_c
+#     ports:
+#       - "5988:5988"
+#     networks:
+#       - app-network
+#     volumes:
+#       - .:/app  # Mount the current directory to /app inside the container  this volume now attached to container and we can do now live changes from our local host and it will directly reflect to container
+#     depends_on:
+#       - mongo
+#     restart: always
+    
+#   mongo:
+#     image: mongo
+#     container_name: mongo_c
+#     ports:
+#       - "27017:27017"  # Exposing MongoDB's default port
+#     networks:
+#       - app-network
+#     volumes:
+#       - mongoData:/data/db  # Persist MongoDB data    automatically create mongoData in host machine 
+
+# networks:
+#   app-network:
+#     driver: bridge
+
+# volumes:
+#   mongoData: {}
+
+
+
+#   volumes:
+#     - .:/app
+# linr n0 -9     copy/mount frontend folder in container /app directory so the changes made locally by host in code 
+#                 will directly reflected to container app directory so we did not need to create image on every changes in code volume will handle this
+#  moreover if we create many instances of a container data will be same bcz volume is mount to containers 
+
+
+      # DB_URL=mongodb://mongo:27017/fitmarkket      to run docker compose upp --build 
+      # DB_URL="mongodb+srv://dbUser:12345@cluster0.op0lyb9.mongodb.net/Ecommerce?retryWrites=true&w=majority"
+
+
+
+version: '3.7'
+
+services:
+  serverservice:
+    image: rajivkumawat3/ecom_server
+    container_name: fitmarket-server_c
+    ports:
+      - "5988:5988"
+    networks:
+      - web
+    volumes:
+      - .:/app      # mount  current dir to /app inside docker container --- this allows live change in docker server like nodemon when we update anything in current directory
+    deploy:
+      mode: replicated
+      replicas: 4
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s  
+    depends_on:
+      - mongo
+    restart: always
+    
+  mongoservice:
+    image: mongo
+    command: mongod --bind_ip_all
+    container_name: mongo_c
+    ports:
+      - "27018:27017"  
+    networks:
+      - web
+    deploy:
+      mode: replicated 
+      replicas: 1
+    volumes:
+      - mongoData:/data/db 
+
+
+networks:
+  web:
+    external: true    #  driver: overlay
+
+volumes:
+  mongoData: {}
+
