@@ -66,5 +66,5 @@
   "devDependencies": {
     "redux-devtools": "^3.7.0"
   },
-  "proxy": "https://fitmarket-backend.onrender.com/"
+  "proxy": "http://localhost:5988/"
 }
