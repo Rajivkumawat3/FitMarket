@@ -127,7 +127,7 @@ STRIPE_SECRET_KEY=
 #### Admin Dashboard
 
 <img width="934" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/d654b300-f38c-4e5f-8d6a-d035ca14eec2">
-<img width="534" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/48c42667-30e0-4246-a5ae-68b774a697fc">
+<img width="934" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/48c42667-30e0-4246-a5ae-68b774a697fc">
 
 
 #### Admin All Orders Page
