@@ -104,7 +104,7 @@ STRIPE_SECRET_KEY=
 
 
 #### User Home Page
-<img width="924" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/83f9f550-0294-4997-9d50-789acfd0f7d6">
+<img width="924" alt="image" src="https://github.com/user-attachments/assets/5586eb6a-30d8-4d69-8324-2130dbd4bc38">
 
 
 
@@ -131,13 +131,13 @@ STRIPE_SECRET_KEY=
 
 
 #### Admin All Orders Page
-<img width="551" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/ddbce756-08c6-4390-8021-3d6a96f968d9">
+<img width="929" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/ddbce756-08c6-4390-8021-3d6a96f968d9">
 
 
 #### Admin Products Page
 
-<img width="549" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/b670e34d-de3f-4178-b4eb-5286ade64aec">
+<img width="929" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/b670e34d-de3f-4178-b4eb-5286ade64aec">
 
 
 #### Admin All users page
-<img width="551" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/8117c000-3e36-43d4-be34-486a6f96fd1f">
+<img width="929" alt="image" src="https://github.com/Rajivkumawat3/Fit-Market/assets/122862213/8117c000-3e36-43d4-be34-486a6f96fd1f">
