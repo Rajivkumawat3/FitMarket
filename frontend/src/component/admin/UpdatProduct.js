@@ -42,16 +42,14 @@ const UpdatProduct= () => {
     const [imagesPreview, setImagesPreview] = useState([]);
   
     const categories = [
-      "Laptop",
-      "Footwear",
-      "Bottom",
-      "Tops",
-      "Attire",
-      "Camera",
-      "SmartPhones",
-      "men",
-      "women"
-    ];
+      "Videogame",
+      "Furniture",
+      "Two-wheeler",
+      "Four-Wheeler",
+      "digital-equipments",
+         "clothes",
+     
+     ];
   
   
     useEffect(() => {
