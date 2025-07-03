@@ -1,0 +1,84 @@
+
+      # DB_URL=mongodb://mongo:27017/fitmarkket      to run docker compose upp --build 
+      # DB_URL="mongodb+srv://dbUser:12345@cluster0.op0lyb9.mongodb.net/Ecommerce?retryWrites=true&w=majority"
+      #DB_URL="mongodb+srv://rajivkumawat28012002:i9LAVBI9bFUeRSbp@cluster0.ogxbtpg.mongodb.net/?retryWrites=true&w=majority"
+
+version: '3.7'
+
+services:
+  nginxservice:
+    image: rajivkumawat3/nginx-reverse-proxy:latest
+    ports:
+      - "8000:80"
+    depends_on:
+      - clientservice
+      - serverservice
+    networks:
+      - webx
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  clientservice:
+    image: rajivkumawat3/ecom_frontend:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - webx
+    depends_on:
+      - serverservice
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  serverservice:
+    image: rajivkumawat3/ecom_backend:latest
+    ports:
+      - "5988:5988"
+    networks:
+      - webx
+    deploy:
+      mode: replicated
+      replicas: 4
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+networks:
+  webx:
+    driver: overlay
+
+volumes:
+  mongoData: {}
+
+# 🧑 User browser
+#      |
+#      | 1. GET http://localhost/
+#      ↓
+# 🌐 Nginx (container on port 80)
+#      |
+#      | 2. proxy_pass to clientservice:3000
+#      ↓
+# 🖥️ React frontend (clientservice)
+#      |
+#      | 3. axios.get('/api/products')
+#      ↓
+# 🌐 Nginx (again)
+#      |
+#      | 4. proxy_pass to serverservice:5988
+#      ↓
+# 🧠 Backend service (1 of 4 replicas in Docker Swarm)
+
+
+# docker stack deploy -c docker-compose-swarm.yml fitmarket
+# docker stack services fitmarket
+#  means these are valid urls now http://localhost:8000/product/65192ae08873cb01c79050e8

@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  client:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    container_name: fitmarket-client_c
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./backend
+    container_name: fitmarket-server_c
+    ports:
+      - '5988:5988'
+    networks:
+      - app-network
+    # depends_on:
+    #   - mongo
+    restart: always
+
+  # mongo:
+  #   image: mongo
+  #   container_name: mongo_c
+  #   ports:
+  #     - '27018:27017'
+  #   networks:
+  #     - app-network
+  #   volumes:
+  #     - mongoData:/data/db
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongoData: {}

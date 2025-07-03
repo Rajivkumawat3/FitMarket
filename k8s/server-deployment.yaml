@@ -18,14 +18,14 @@ spec:
     spec:
       containers:
         - name: server
-          image: rajivkumawat3/ecom_server
+          image: rajivkumawat3/ecom_backend:latest
           ports:
             - containerPort: 5988
           volumeMounts:
             - name: app-volume
               mountPath: /app
           env:
-            - name: MONGO_URL
+            - name: DB_URL
               value: mongodb://mongo-service:27017
       volumes:
         - name: app-volume

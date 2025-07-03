@@ -36,4 +36,4 @@ spec:
   ports:
     - port: 27017
       targetPort: 27017
-  clusterIP: None  # Headless service for stable DNS
+  clusterIP: None  

@@ -26,7 +26,8 @@ const Home = () => {
 
   return (
     <Fragment>
-     {
+     { 
+      
        loading ? <Loader/>:  <Fragment>
        <MetaData title="Fit-Market.com"/>
               <div className="banner">
