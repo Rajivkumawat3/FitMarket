@@ -40,7 +40,7 @@ Fit-Market: Online Shopping Platform 🛒 | Built with React.js, Node.js, Redux,
 3. Open the folder containing the cloned repository
 
 4.Download dependencies
-Go inside ./Fit-Market/
+Go inside ./Fit-Market/backend
 
 ```sh
 Run npm install 
@@ -52,7 +52,7 @@ Go inside Fit-Market/frontend
 Run npm install
 ```
 
-To start the project Server on localhost Go inside ./Fit-Market/
+To start the project Server on localhost Go inside ./Fit-Market/backend
 
 ```sh
 Run npm run dev
