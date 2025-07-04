@@ -66,5 +66,5 @@
   "devDependencies": {
     "redux-devtools": "^3.7.0"
   },
-  "proxy": "http://localhost:5988"
+  "proxy": "http://127.0.0.1:5988"
 }
