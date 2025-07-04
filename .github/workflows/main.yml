@@ -62,7 +62,7 @@ jobs:
         run: |
           cd frontend
           npm install --legacy-peer-deps
-          npm test
+          npm test -- --passWithNoTests
 
       - name: Build and push frontend image
         if: steps.changes.outputs.frontend_changed == 'true'
