@@ -1,0 +1,77 @@
+name: Conditional Docker Image Build & Push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Hub credentials
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Detect Changed Folders
+        id: changes
+        run: |
+          git fetch origin main
+          changed=$(git diff --name-only HEAD^ HEAD)
+          echo "$changed"
+
+          echo "frontend_changed=false" >> $GITHUB_OUTPUT
+          echo "backend_changed=false" >> $GITHUB_OUTPUT
+          echo "nginx_changed=false" >> $GITHUB_OUTPUT
+
+          if echo "$changed" | grep -q "^frontend/"; then
+            echo "frontend_changed=true" >> $GITHUB_OUTPUT
+          fi
+          if echo "$changed" | grep -q "^backend/"; then
+            echo "backend_changed=true" >> $GITHUB_OUTPUT
+          fi
+          if echo "$changed" | grep -q "^nginx/"; then
+            echo "nginx_changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      #########################
+      ## FRONTEND: Run Tests ##
+      #########################
+      - name: Install and test frontend
+        if: steps.changes.outputs.frontend_changed == 'true'
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm test -- --watchAll=false
+
+      ###################################
+      ## BACKEND: No tests implemented ##
+      ###################################
+      - name: Skip backend tests (none defined)
+        if: steps.changes.outputs.backend_changed == 'true'
+        run: echo "No backend tests to run"
+
+      ###################################
+      ## Build & Push Docker Images    ##
+      ###################################
+
+      - name: Build and push backend image
+        if: steps.changes.outputs.backend_changed == 'true'
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom_backend:latest ./backend
+          docker push ${{ secrets.DOCKER_USERNAME }}/ecom_backend:latest
+
+      - name: Build and push frontend image
+        if: steps.changes.outputs.frontend_changed == 'true'
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom_frontend:latest ./frontend
+          docker push ${{ secrets.DOCKER_USERNAME }}/ecom_frontend:latest
+
+      - name: Build and push nginx image
+        if: steps.changes.outputs.nginx_changed == 'true'
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx-reverse-proxy:latest ./nginx
+          docker push ${{ secrets.DOCKER_USERNAME }}/nginx-reverse-proxy:latest
+
