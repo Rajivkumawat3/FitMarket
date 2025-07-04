@@ -25,10 +25,10 @@ Fit-Market: Online Shopping Platform 🛒 | Built with React.js, Node.js, Redux,
 -  Media management via Cloudinary
 -  Redux-powered state management for predictable data flow (boosted app performance by 40%)
 -  Intuitive admin dashboard to manage:
-  - Products
-  - Users
-  - Payments
-  - Orders
+     - Products
+     - Users
+     - Payments
+     - Orders
 
 ## Getting Started
 
