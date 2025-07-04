@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensure full history to use HEAD^
+          fetch-depth: 0  # Required for git diff HEAD^
 
       - name: Set up Docker Hub credentials
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -24,19 +24,23 @@ jobs:
           changed=$(git diff --name-only HEAD^ HEAD)
           echo "$changed"
 
-          echo "frontend_changed=false" >> $GITHUB_OUTPUT
-          echo "backend_changed=false" >> $GITHUB_OUTPUT
-          echo "nginx_changed=false" >> $GITHUB_OUTPUT
+          frontend_changed=false
+          backend_changed=false
+          nginx_changed=false
 
           if echo "$changed" | grep -q "^frontend/"; then
-            echo "frontend_changed=true" >> $GITHUB_OUTPUT
+            frontend_changed=true
           fi
           if echo "$changed" | grep -q "^backend/"; then
-            echo "backend_changed=true" >> $GITHUB_OUTPUT
+            backend_changed=true
           fi
           if echo "$changed" | grep -q "^nginx/"; then
-            echo "nginx_changed=true" >> $GITHUB_OUTPUT
+            nginx_changed=true
           fi
+
+          echo "frontend_changed=$frontend_changed" >> $GITHUB_OUTPUT
+          echo "backend_changed=$backend_changed" >> $GITHUB_OUTPUT
+          echo "nginx_changed=$nginx_changed" >> $GITHUB_OUTPUT
 
       # ===== BACKEND =====
       - name: Run backend tests
@@ -44,7 +48,7 @@ jobs:
         run: |
           cd backend
           npm install
-          npm test || echo "No tests defined in backend"
+          npm test || echo "No backend tests defined"
 
       - name: Build and push backend image
         if: steps.changes.outputs.backend_changed == 'true'
@@ -57,7 +61,7 @@ jobs:
         if: steps.changes.outputs.frontend_changed == 'true'
         run: |
           cd frontend
-          npm install
+          npm install --legacy-peer-deps
           npm test
 
       - name: Build and push frontend image
