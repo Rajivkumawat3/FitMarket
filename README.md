@@ -20,11 +20,11 @@ Fit-Market: Online Shopping Platform 🛒 | Built with React.js, Node.js, Redux,
   - Search and pagination
   - Cart functionality
   - Ratings, reviews, and product filters
-- 🔐 Secure user authentication using JWT
-- 💳 Stripe integration for seamless online payments
-- ☁️ Media management via Cloudinary
-- ⚙️ Redux-powered state management for predictable data flow (boosted app performance by 40%)
-- 🛠️ Intuitive admin dashboard to manage:
+-  Secure user authentication using JWT
+-  Stripe integration for seamless online payments
+-  Media management via Cloudinary
+-  Redux-powered state management for predictable data flow (boosted app performance by 40%)
+-  Intuitive admin dashboard to manage:
   - Products
   - Users
   - Payments
@@ -32,7 +32,6 @@ Fit-Market: Online Shopping Platform 🛒 | Built with React.js, Node.js, Redux,
 
 ## Getting Started
 
-1. Fork the repository
 2. Clone the repository
 
 
