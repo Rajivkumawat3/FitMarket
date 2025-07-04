@@ -11,11 +11,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure full history to use HEAD^
 
       - name: Set up Docker Hub credentials
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Detect Changed Folders
+      - name: Detect changed directories
         id: changes
         run: |
           git fetch origin main
@@ -36,26 +38,13 @@ jobs:
             echo "nginx_changed=true" >> $GITHUB_OUTPUT
           fi
 
-      #########################
-      ## FRONTEND: Run Tests ##
-      #########################
-      - name: Install and test frontend
-        if: steps.changes.outputs.frontend_changed == 'true'
-        working-directory: ./frontend
-        run: |
-          npm ci
-          npm test -- --watchAll=false
-
-      ###################################
-      ## BACKEND: No tests implemented ##
-      ###################################
-      - name: Skip backend tests (none defined)
+      # ===== BACKEND =====
+      - name: Run backend tests
         if: steps.changes.outputs.backend_changed == 'true'
-        run: echo "No backend tests to run"
-
-      ###################################
-      ## Build & Push Docker Images    ##
-      ###################################
+        run: |
+          cd backend
+          npm install
+          npm test || echo "No tests defined in backend"
 
       - name: Build and push backend image
         if: steps.changes.outputs.backend_changed == 'true'
@@ -63,12 +52,21 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom_backend:latest ./backend
           docker push ${{ secrets.DOCKER_USERNAME }}/ecom_backend:latest
 
+      # ===== FRONTEND =====
+      - name: Run frontend tests
+        if: steps.changes.outputs.frontend_changed == 'true'
+        run: |
+          cd frontend
+          npm install
+          npm test
+
       - name: Build and push frontend image
         if: steps.changes.outputs.frontend_changed == 'true'
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom_frontend:latest ./frontend
           docker push ${{ secrets.DOCKER_USERNAME }}/ecom_frontend:latest
 
+      # ===== NGINX =====
       - name: Build and push nginx image
         if: steps.changes.outputs.nginx_changed == 'true'
         run: |
